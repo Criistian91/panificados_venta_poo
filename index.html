@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Panificados - POO</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Sistema de Gestión de Panificados</h1>
+        <section id="panelControles">
+            <button id="togglePreciosBtn">Mostrar/ocultar precios</button>
+            <button id="addStockBtn">Agregar nuevo producto</button>
+            <button onclick="location.href='estadisticas.html'">Ver estadísticas</button>
+            <button id="cerrarSesionBtn">Cerrar sesión</button>
+            <button id="cierreDiaBtn">Cierre del día</button>
+            <button id="toggleThemeBtn">🌙 Modo oscuro</button>
+        </section>
+    </header>
+
+    <section id="productosSection">
+        <h2>Productos</h2>
+        <div id="productosContainer"></div>
+    </section>
+
+    <section id="formularioNuevoProducto" class="panel-form">
+    <h3>Crear nuevo producto</h3>
+
+    <label>Nombre:
+        <input id="nombreInput" type="text">
+    </label>
+
+    <label>Precio costo:
+        <input id="precioCostoInput" type="number" step="0.01">
+    </label>
+
+    <label>Precio venta:
+        <input id="precioVentaInput" type="number" step="0.01">
+    </label>
+
+    <label>Categoría:
+        <select id="categoriaNueva"></select>
+    </label>
+
+    <label>Agregar categoría:
+        <input id="categoriaAgregar" type="text">
+        <button id="btnAgregarCategoria">Agregar</button>
+    </label>
+
+    <label>Stock inicial:
+        <input id="stockInput" type="number">
+    </label>
+
+    <button id="btnCrearProducto">Crear producto</button>
+</section>
+
+
+    <section id="totalesSection">
+        <h2>Totales</h2>
+        <div id="totalesContainer"></div>
+    </section>
+
+    <section id="turnosSection">
+        <h2>Configuración de turnos</h2>
+        <label>Mañana inicio:<input type="time" id="inicioManana"></label>
+        <label>Mañana fin:<input type="time" id="finManana"></label>
+        <label>Tarde inicio:<input type="time" id="inicioTarde"></label>
+        <label>Tarde fin:<input type="time" id="finTarde"></label>
+    </section>
+
+      <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>&copy; 2025 - Cristian Daniel Altamiranda</p>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const btn = document.getElementById("toggleThemeBtn");
+
+        // --- ANIMACIÓN SUAVE ---
+        document.body.style.transition = "background-color 0.35s ease, color 0.35s ease";
+
+        // --- DETECTAR HORARIO ---
+        function activarSegunHora() {
+            const hora = new Date().getHours();
+            return (hora >= 19 || hora < 7); // 19hs a 7am = oscuro
+        }
+
+        // --- CARGAR TEMA DESDE STORAGE O HORARIO ---
+        let darkGuardado = localStorage.getItem("darkMode");
+        let activarDark = false;
+
+        if (darkGuardado === null) {
+            activarDark = activarSegunHora();
+            localStorage.setItem("darkMode", activarDark);
+        } else {
+            activarDark = (darkGuardado === "true");
+        }
+
+        if (activarDark) {
+            document.body.classList.add("dark");
+            btn.textContent = "☀️ Modo claro";
+        }
+
+        // --- BOTÓN PARA CAMBIAR TEMA ---
+        btn.addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+
+            const dark = document.body.classList.contains("dark");
+            localStorage.setItem("darkMode", dark);
+
+            btn.textContent = dark ? "☀️ Modo claro" : "🌙 Modo oscuro";
+        });
+    });
+    </script>
+
+    <script type="module" src="app-poo.js"></script>
+</body>
+</html>

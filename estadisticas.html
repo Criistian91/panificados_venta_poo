@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Estadísticas - Panificados</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Estadísticas de Ventas - Panificados</h1>
+    <div class="header-actions">
+      <button id="volverBtn">← Volver</button>
+      <button id="exportarCSVBtn">⬇️ Exportar CSV</button>
+      <button id="resetEstadisticasBtn" class="danger">🗑 Resetear estadísticas</button>
+      <button id="toggleThemeBtn">🌙 Modo oscuro</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- RESUMEN -->
+    <section id="resumenSection">
+      <h2>Resumen rápido</h2>
+      <div id="resumenTotales"></div>
+    </section>
+
+    <!-- CHARTS PRINCIPALES -->
+    <section id="charts">
+      <div class="chart-card">
+        <h3>Top productos más vendidos</h3>
+        <canvas id="chartTopProductos" height="200"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Ventas por categoría</h3>
+        <canvas id="chartCategorias" height="200"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Ingresos reales vs venta esperada</h3>
+        <canvas id="chartIngresos" height="200"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Promedio de unidades vendidas por producto</h3>
+        <canvas id="chartPromedios" height="200"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Ganancia por turno (día)</h3>
+        <canvas id="chartDia" height="200"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Ingreso por día (mes)</h3>
+        <canvas id="chartVentasPorDia" height="200"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Ganancias por día (mes)</h3>
+        <canvas id="chartGananciasPorDia" height="200"></canvas>
+      </div>
+    </section>
+
+    <!-- TABLA POR PRODUCTO -->
+    <section id="tablaSection">
+      <h3>Detalle por producto</h3>
+      <table id="tablaProductos">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Stock</th>
+            <th>Vendidos</th>
+            <th>Precio Venta</th>
+            <th>Ganancia total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- TABLA POR DÍA DEL MES -->
+    <section id="tablaDiasSection">
+      <h3>Resumen diario del mes</h3>
+      <table id="tablaDias">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Ingreso</th>
+            <th>Ganancia</th>
+            <th>Costo vendido</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <p>&copy; 2025 - Cristian Daniel Altamiranda</p>
+  </footer>
+
+  <!-- ============================
+        🌙 TEMA OSCURO / CLARO 
+       ============================ -->
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("toggleThemeBtn");
+
+      document.body.style.transition =
+        "background-color 0.35s ease, color 0.35s ease";
+
+      function activarSegunHora() {
+          const h = new Date().getHours();
+          return (h >= 19 || h < 7);
+      }
+
+      let guardado = localStorage.getItem("darkMode");
+      let usarDark = guardado === null ? activarSegunHora() : guardado === "true";
+
+      if (usarDark) document.body.classList.add("dark");
+
+      btn.textContent = usarDark ? "☀️ Modo claro" : "🌙 Modo oscuro";
+
+      btn.addEventListener("click", () => {
+          document.body.classList.toggle("dark");
+          const dark = document.body.classList.contains("dark");
+          localStorage.setItem("darkMode", dark);
+          btn.textContent = dark ? "☀️ Modo claro" : "🌙 Modo oscuro";
+      });
+  });
+  </script>
+
+  <!-- ============================
+        🎨 PALETA PARA CHART.JS 
+       ============================ -->
+  <script>
+  window.chartThemes = {
+      getColors() {
+          const dark = document.body.classList.contains("dark");
+
+          return {
+              text: dark ? "#ffffff" : "#222222",
+              grid: dark ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.15)",
+              border: dark ? "#dddddd" : "#444444",
+              barColors: dark
+                  ? ["#66ccff", "#ffcc66", "#99ff99", "#ff9999", "#cc99ff"]
+                  : ["#3366cc", "#ff9933", "#33aa33", "#cc3333", "#9933cc"],
+              donutColors: dark
+                  ? ["#66ccff", "#99ff99", "#ffcc66", "#ff9999"]
+                  : ["#3366cc", "#33aa33", "#ff9933", "#cc3333"]
+          };
+      },
+
+      applyToChart(chart) {
+          const C = this.getColors();
+
+          chart.options.plugins.legend.labels.color = C.text;
+          if (chart.options.plugins.title) {
+              chart.options.plugins.title.color = C.text;
+          }
+
+          if (chart.options.scales) {
+              Object.values(chart.options.scales).forEach(scale => {
+                  scale.ticks.color = C.text;
+                  scale.grid.color = C.grid;
+                  scale.grid.borderColor = C.border;
+              });
+          }
+
+          chart.update();
+      },
+
+      recolorAll() {
+          if (!window.allCharts) return;
+          window.allCharts.forEach((ch) => this.applyToChart(ch));
+      }
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+      const observer = new MutationObserver(() => window.chartThemes.recolorAll());
+      observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  });
+  </script>
+
+  <!-- TU LÓGICA PRINCIPAL -->
+  <script type="module" src="poo/estadisticas.js"></script>
+
+</body>
+</html>
+

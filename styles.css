@@ -1,0 +1,428 @@
+/* body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+header, .top-bar {
+  position:relative;
+  top: 0;
+  background-color: #fff;
+  padding: 1em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+main {
+  margin-top: 100px;
+  padding: 1em;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button {
+  margin-top: 10px;
+  padding: 0.5rem 1rem;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #7c3737;
+}
+
+#productosContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  justify-content: flex-start;
+  margin-bottom: 2em;
+}
+
+#productosContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1em;
+}
+
+
+.producto-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  width: 260px;
+}
+
+.producto-item button {
+  margin: 0.2em;
+  padding: 0.5em;
+  font-size: 0.9em;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 0.5em;
+}
+
+.producto-item .acciones {
+  display: flex;
+  gap: 5px;
+  margin-top: 0.5em;
+  flex-wrap: wrap;
+}
+
+
+#totalesContainer, #panelTotales {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  margin-top: 2rem;
+}
+
+label {
+  font-weight: bold;
+  font-style: italic;
+  font-family: "Arial", sans-serif;
+  display: block;
+  margin-bottom: 10px;
+}
+
+select, input[type="time"] {
+  margin: 0.5em;
+  padding: 0.4em;
+}
+
+
+#resultadosPromedios {
+  margin-top: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.resumen-producto {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2em;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+} */
+
+
+
+/* ============================================================
+   BASE GENERAL
+   ============================================================ */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+header, .top-bar {
+  background-color: #ffffff;
+  padding: 1em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 {
+  margin: 0;
+  padding-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+main {
+  margin-top: 20px;
+  padding: 1em;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+
+button.danger {
+  background-color: #d9534f !important;
+}
+
+button.danger:hover {
+  background-color: #c9302c !important;
+}
+
+/* ============================================================
+   TARJETAS / SECCIONES
+   ============================================================ */
+
+.chart-card,
+#resumenSection,
+#tablaSection,
+#tablaDiasSection {
+  background: #ffffff;
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+/* ============================================================
+   PRODUCTOS
+   ============================================================ */
+
+#productosContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1em;
+}
+
+.producto-item {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.acciones {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.producto-item button {
+  font-size: 0.85rem;
+  padding: 0.4rem;
+}
+
+/* ============================================================
+   LABELS Y FORMULARIOS
+   ============================================================ */
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+}
+
+select,
+input[type="time"],
+input[type="text"],
+input[type="number"] {
+  padding: 0.4rem;
+  border-radius: 5px;
+  border: 1px solid #bbb;
+  width: 100%;
+  max-width: 250px;
+}
+
+/* ============================================================
+   TABLAS
+   ============================================================ */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+table thead {
+  background-color: #eaeaea;
+}
+
+table th, table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+table tr:hover {
+  background-color: #f7f7f7;
+}
+
+/* ============================================================
+   RESUMENES
+   ============================================================ */
+
+#resumenTotales {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.resumen-producto {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2em;
+  border-radius: 10px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+
+/* ============================================================
+   GRAFICOS (canvas)
+   ============================================================ */
+
+canvas {
+  margin-top: 10px;
+}
+
+
+/* ============================================================
+   🌙 MODO OSCURO - Dark Theme
+   ============================================================ */
+
+body.dark {
+  background-color: #181a1b;
+  color: #e5e5e5;
+}
+
+/* Header */
+body.dark header, 
+body.dark .top-bar {
+  background-color: #202324;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(255,255,255,0.08);
+}
+
+/* Tarjetas y contenedores */
+body.dark .chart-card,
+body.dark #resumenSection,
+body.dark #tablaSection,
+body.dark #tablaDiasSection,
+body.dark #productosContainer .producto-item,
+body.dark #totalesContainer,
+body.dark .panel-form {
+  background-color: #242728;
+  color: #eaeaea;
+  border: 1px solid #333;
+  box-shadow: 0 2px 6px rgba(255,255,255,0.06);
+}
+
+/* Tablas */
+body.dark table thead {
+  background-color: #303334;
+}
+
+body.dark table tr:hover {
+  background-color: #2d2f2f;
+}
+
+/* Inputs */
+body.dark input,
+body.dark select {
+  background-color: #2b2d2e;
+  border: 1px solid #555;
+  color: #fff;
+}
+
+/* Botones */
+body.dark button {
+  background-color: #3f7d3f;
+}
+
+body.dark button:hover {
+  background-color: #4da74d;
+}
+
+/* Botón peligro */
+body.dark button.danger {
+  background-color: #b13a36 !important;
+}
+
+body.dark button.danger:hover {
+  background-color: #d04b45 !important;
+}
+
+/* Modal */
+body.dark .modal-content {
+  background-color: #2b2d2e;
+  color: #e5e5e5;
+  border: 1px solid #444;
+}
+
+/* Tablas bordes */
+body.dark table th,
+body.dark table td {
+  border-color: #444;
+}
+
+/* Gráficos (fondos de canvas) */
+body.dark canvas {
+  background-color: #2a2c2d;
+  border-radius: 6px;
+}
